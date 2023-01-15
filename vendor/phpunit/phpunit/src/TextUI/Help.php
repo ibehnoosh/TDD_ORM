@@ -29,18 +29,18 @@ final class Help
     private const LEFT_MARGIN = '  ';
 
     private const HELP_TEXT = [
-        'Usage' => [
+        'Usage'                  => [
             ['text' => 'phpunit [options] UnitTest.php'],
             ['text' => 'phpunit [options] <directory>'],
         ],
 
-        'Code Coverage Options' => [
+        'Code Coverage Options'  => [
             ['arg' => '--coverage-clover <file>', 'desc' => 'Generate code coverage report in Clover XML format'],
             ['arg' => '--coverage-cobertura <file>', 'desc' => 'Generate code coverage report in Cobertura XML format'],
             ['arg' => '--coverage-crap4j <file>', 'desc' => 'Generate code coverage report in Crap4J XML format'],
             ['arg' => '--coverage-html <dir>', 'desc' => 'Generate code coverage report in HTML format'],
             ['arg' => '--coverage-php <file>', 'desc' => 'Export PHP_CodeCoverage object to file'],
-            ['arg' => '--coverage-text <file>', 'desc' => 'Generate code coverage report in text format [default: standard output]'],
+            ['arg' => '--coverage-text=<file>', 'desc' => 'Generate code coverage report in text format [default: standard output]'],
             ['arg' => '--coverage-xml <dir>', 'desc' => 'Generate code coverage report in PHPUnit XML format'],
             ['arg' => '--coverage-cache <dir>', 'desc' => 'Cache static analysis results'],
             ['arg' => '--warm-coverage-cache', 'desc' => 'Warm static analysis cache'],
@@ -50,7 +50,7 @@ final class Help
             ['arg' => '--no-coverage', 'desc' => 'Ignore code coverage configuration'],
         ],
 
-        'Logging Options' => [
+        'Logging Options'        => [
             ['arg' => '--log-junit <file>', 'desc' => 'Log test execution in JUnit XML format to file'],
             ['arg' => '--log-teamcity <file>', 'desc' => 'Log test execution in TeamCity format to file'],
             ['arg' => '--testdox-html <file>', 'desc' => 'Write agile documentation in HTML format to file'],
@@ -118,13 +118,13 @@ final class Help
             ['arg'    => '--printer <printer>', 'desc' => 'TestListener implementation to use'],
             ['spacer' => ''],
 
-            ['arg' => '--order-by <order>', 'desc' => 'Run tests in order: default|defects|duration|no-depends|random|reverse|size'],
-            ['arg' => '--random-order-seed <N>', 'desc' => 'Use a specific random seed <N> for random order'],
-            ['arg' => '--cache-result', 'desc' => 'Write test results to cache file'],
-            ['arg' => '--do-not-cache-result', 'desc' => 'Do not write test results to cache file'],
+            ['arg'    => '--order-by <order>', 'desc' => 'Run tests in order: default|defects|duration|no-depends|random|reverse|size'],
+            ['arg'    => '--random-order-seed <N>', 'desc' => 'Use a specific random seed <N> for random order'],
+            ['arg'    => '--cache-result', 'desc' => 'Write test results to cache file'],
+            ['arg'    => '--do-not-cache-result', 'desc' => 'Do not write test results to cache file'],
         ],
 
-        'Configuration Options' => [
+        'Configuration Options'  => [
             ['arg' => '--prepend <file>', 'desc' => 'A PHP script that is included as early as possible'],
             ['arg' => '--bootstrap <file>', 'desc' => 'A PHP script that is included before the tests run'],
             ['arg' => '-c|--configuration <file>', 'desc' => 'Read configuration from XML file'],
@@ -138,7 +138,7 @@ final class Help
             ['arg' => '--migrate-configuration', 'desc' => 'Migrate configuration file to current format'],
         ],
 
-        'Miscellaneous Options' => [
+        'Miscellaneous Options'  => [
             ['arg' => '-h|--help', 'desc' => 'Prints this usage information'],
             ['arg' => '--version', 'desc' => 'Prints the version and exits'],
             ['arg' => '--atleast-version <min>', 'desc' => 'Checks that version is greater than min and exits'],
@@ -243,7 +243,8 @@ final class Help
                     $arg = Color::colorize('fg-green', str_pad($option['arg'], $this->maxArgLength));
                     $arg = preg_replace_callback(
                         '/(<[^>]+>)/',
-                        static function ($matches) {
+                        static function ($matches)
+                        {
                             return Color::colorize('fg-cyan', $matches[0]);
                         },
                         $arg

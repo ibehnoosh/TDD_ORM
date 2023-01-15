@@ -464,7 +464,7 @@ abstract class ParserAbstract implements Parser
     */
 
     /*
-     * Helpers functions invoked by semantic actions
+     * Helper functions invoked by semantic actions
      */
 
     /**

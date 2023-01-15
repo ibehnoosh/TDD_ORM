@@ -5,7 +5,7 @@ use App\Exceptions\ConfigFileNotFoundException;
 
 Class Config
 {
-    public static function getFileContents(string $filename)
+    public static function getFileContents(string $filename) : array
     {
         $filePath=realpath(__DIR__."/../Configs/".$filename.".php");
         if(!$filePath){
