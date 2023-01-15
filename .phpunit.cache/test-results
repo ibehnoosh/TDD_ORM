@@ -1,1 +1,1 @@
-{"version":1,"defects":{"Tests\\Unit\\ConfigTest::testGetFileContentsReturnArray":4},"times":{"Tests\\Unit\\ConfigTest::testGetFileContentsReturnArray":0.005}}
+{"version":1,"defects":{"Tests\\Unit\\ConfigTest::testGetFileContentsReturnArray":4,"Tests\\Unit\\ConfigTest::testIfFileNotExistThrowException":4,"Tests\\Unit\\ConfigTest::testGetMethodReturnValid":3},"times":{"Tests\\Unit\\ConfigTest::testGetFileContentsReturnArray":0.006,"Tests\\Unit\\ConfigTest::testIfFileNotExistThrowException":0.001,"Tests\\Unit\\ConfigTest::testGetMethodReturnValid":0.001}}
