@@ -94,4 +94,9 @@ class PDOQueryBuilder
     {
         $this->connection->rollback();
     }
+
+    public function find(int $id)
+    {
+        return $this->where('id',$id)->first();
+    }
 }
