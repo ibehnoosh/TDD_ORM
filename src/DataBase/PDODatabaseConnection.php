@@ -20,7 +20,6 @@ class PDODatabaseConnection implements DatabaseConnectionInterface
         'db_user',
         'db_password'
     ];
-
     public function __construct(array $config)
     {
         if (!$this->isConfigValid($config)){
@@ -38,6 +37,7 @@ class PDODatabaseConnection implements DatabaseConnectionInterface
         } catch(PDOException $e) {
             throw new DatabaseConnectionException();
         }
+        return $this;
     }
     public function getConnection()
     {
