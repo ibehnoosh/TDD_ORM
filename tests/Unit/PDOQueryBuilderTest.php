@@ -28,7 +28,6 @@ class PDOQueryBuilderTest extends TestCase
         $result=$this->queryBuilder->table('bugs')->create($data);
         return $result;
     }
-
     public function testItCanCreateData()
     {
        $result=$this->insertIntoDb();
@@ -44,7 +43,6 @@ class PDOQueryBuilderTest extends TestCase
             ->update(['email' => 'euruse@gmail.com']);
         $this->assertEquals(2, $result);
     }
-
     public function testItCanUpdateWithMultipleWhere()
     {
         $this->insertIntoDb();
@@ -57,7 +55,6 @@ class PDOQueryBuilderTest extends TestCase
 
         $this->assertEquals(1,$result);
     }
-
     public function testItCanDeleteRecord()
     {
         $this->insertIntoDb();
@@ -71,10 +68,28 @@ class PDOQueryBuilderTest extends TestCase
             ->delete();
         $this->assertEquals(6, $result);
     }
+    public function testItCanFetchData()
+    {
+        $this->multipleInsertIntoDB(10, ['user'=>'moshtagh']);
+        $result= $this->queryBuilder
+            ->table('bugs')
+            ->where('user', 'moshtagh')
+            ->get();
+        $this->assertIsArray($result);
+        $this->assertCount(10, $result);
+    }
     private function getConfig()
     {
         return Config::get('database','pdo_testing');
     }
+    private function multipleInsertIntoDB($count,$options=[])
+    {
+        for($i=1; $i<=$count;$i++){
+            $this->insertIntoDb($options);
+        }
+    }
+
+
     public function tearDown(): void
     {
         $this->queryBuilder->rollback();
