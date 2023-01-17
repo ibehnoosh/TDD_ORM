@@ -20,7 +20,7 @@ class PDOQueryBuilder
         $this->table=($table);
         return $this;
     }
-    public function  create(array $data)
+    public function create(array $data)
     {
         $placeHolder=[];
         foreach ($data as $column => $value)
@@ -41,7 +41,6 @@ class PDOQueryBuilder
         $this->values[]=$value;
         return $this;
     }
-
     public function update(array $data)
     {
         $fields=[];
@@ -55,7 +54,6 @@ class PDOQueryBuilder
         $query->execute($this->values);
         return $query->rowCount();
     }
-
     public function delete()
     {
         $conditions=implode(' and ', $this->conditions);
@@ -64,7 +62,6 @@ class PDOQueryBuilder
         $query->execute($this->values);
         return $query->rowCount();
     }
-
     public function truncatAllTable()
     {
         $query=$this->connection->prepare("SHOW TABLES");
@@ -74,5 +71,13 @@ class PDOQueryBuilder
         {
             $this->connection->prepare("TRUNCATE TABLE `{$table}`")->execute();
         }
+    }
+    public function beginTransaction()
+    {
+        $this->connection->beginTransaction();
+    }
+    public function rollback()
+    {
+        $this->connection->rollback();
     }
 }
