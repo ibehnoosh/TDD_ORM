@@ -17,14 +17,14 @@ class PDOQueryBuilderTest extends TestCase
         $this->queryBuilder->beginTransaction();
         parent::setUp();
     }
-    private function insertIntoDb()
+    private function insertIntoDb($options =[])
     {
-        $data =[
+        $data =array_merge([
             'name'=>'First Bug',
             'link'=>'www.link.com',
             'user' => 'Behnoosh',
             'email'=>'behnoosh@link.com'
-        ];
+        ] , $options);
         $result=$this->queryBuilder->table('bugs')->create($data);
         return $result;
     }
@@ -44,6 +44,20 @@ class PDOQueryBuilderTest extends TestCase
             ->update(['email' => 'euruse@gmail.com']);
         $this->assertEquals(2, $result);
     }
+
+    public function testItCanUpdateWithMultipleWhere()
+    {
+        $this->insertIntoDb();
+        $this->insertIntoDb(['user'=>'Ehsan']);
+        $result=$this->queryBuilder
+            ->table('bugs')
+            ->where('user','Ehsan')
+            ->where('link','www.link.com')
+            ->update(['name'=>'ehsan sh']);
+
+        $this->assertEquals(1,$result);
+    }
+
     public function testItCanDeleteRecord()
     {
         $this->insertIntoDb();
