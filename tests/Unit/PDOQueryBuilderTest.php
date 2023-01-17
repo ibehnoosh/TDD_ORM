@@ -124,6 +124,33 @@ class PDOQueryBuilderTest extends TestCase
         $this->assertIsObject($result);
         $this->assertEquals($id,$result->id);
     }
+    public function testItReturnsEmptyArrayWhenRecordNotFound()
+    {
+        $result=$this->queryBuilder
+            ->table('bugs')
+            ->where('user','dumy')
+            ->get();
+        $this->assertIsArray($result);
+        $this->assertEmpty($result);
+    }
+    public function testItReturnsNullWhenFirstRecordNotFound()
+    {
+        $result=$this->queryBuilder
+            ->table('bugs')
+            ->where('user','dumy')
+            ->first();
+        $this->assertNull($result);
+        $this->assertEmpty($result);
+    }
+    public function testItReturnsZeroWhenRecordNotFoundForUpdate()
+    {
+        $this->multipleInsertIntoDB(4);
+        $result=$this->queryBuilder
+            ->table('bugs')
+            ->where('user','dummy')
+            ->update(['name'=>'Test']);
+        $this->assertEquals(0,$result);
+    }
     private function getConfig()
     {
         return Config::get('database','pdo_testing');
