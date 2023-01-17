@@ -36,12 +36,13 @@ class PDOQueryBuilderTest extends TestCase
     }
     public function testItCanUpdateData()
     {
+       $this->queryBuilder->truncatAllTable();
        $this->insertIntoDb();
        $result=$this->queryBuilder
             ->table('bugs')
             ->where('user', 'Behnoosh')
             ->update(['email' => 'euruse@gmail.com']);
-        $this->assertEquals(2, $result);
+        $this->assertEquals(1, $result);
     }
     public function testItCanUpdateWithMultipleWhere()
     {
@@ -57,6 +58,7 @@ class PDOQueryBuilderTest extends TestCase
     }
     public function testItCanDeleteRecord()
     {
+        $this->queryBuilder->truncatAllTable();
         $this->insertIntoDb();
         $this->insertIntoDb();
         $this->insertIntoDb();
@@ -66,7 +68,7 @@ class PDOQueryBuilderTest extends TestCase
             ->table('bugs')
             ->where('user', 'Behnoosh')
             ->delete();
-        $this->assertEquals(6, $result);
+        $this->assertEquals(4, $result);
     }
     public function testItCanFetchData()
     {
@@ -92,6 +94,18 @@ class PDOQueryBuilderTest extends TestCase
         $result=json_decode(json_encode($result[0]),true);
         $this->assertEquals(['name','user'],array_keys($result));
     }
+    public function testItCanGetFirstRow()
+    {
+        $this->multipleInsertIntoDB(10, ['name'=>'Golbarg']);
+        $result= $this->queryBuilder
+            ->table('bugs')
+            ->where('name', 'Golbarg')
+            ->first();
+        $this->assertIsObject($result);
+        $this->assertObjectHasAttribute('name',$result);
+        $this->assertObjectHasAttribute('user',$result);
+
+    }
     private function getConfig()
     {
         return Config::get('database','pdo_testing');
@@ -102,8 +116,6 @@ class PDOQueryBuilderTest extends TestCase
             $this->insertIntoDb($options);
         }
     }
-
-
     public function tearDown(): void
     {
         $this->queryBuilder->rollback();

@@ -71,6 +71,11 @@ class PDOQueryBuilder
         $query->execute($this->values);
         return $query->fetchAll();
     }
+    public function first(array $columns=['*'])
+    {
+        $data=$this->get($columns);
+        return empty($data) ? null : $data[0];
+    }
     public function truncatAllTable()
     {
         $query=$this->connection->prepare("SHOW TABLES");
