@@ -38,6 +38,19 @@ class PDOQueryBuilderTest extends TestCase
             ->update(['email' => 'euruse@gmail.com']);
         $this->assertEquals(1, $result);
     }
+    public function testItCanDeleteRecord()
+    {
+        $this->insertIntoDb();
+        $this->insertIntoDb();
+        $this->insertIntoDb();
+        $this->insertIntoDb();
+
+        $result= $this->queryBuilder
+            ->table('bugs')
+            ->where('user', 'Behnoosh')
+            ->delete();
+        $this->assertEquals(4, $result);
+    }
     private function insertIntoDb()
     {
         $data =[
